@@ -14,6 +14,12 @@ import java.util.Optional;
 @Controller
 public class UserController implements UserApi {
 
+    UserService userService;
+
+    public UserController(UserService userService ) {
+        this.userService = userService;
+    }
+
     @Override
     public Optional<NativeWebRequest> getRequest() {
         return UserApi.super.getRequest();
@@ -25,6 +31,9 @@ public class UserController implements UserApi {
         newUser.setFirstName("Alex");
         newUser.setEmail("Alex@gmail.com");
         newUser.setLastName("Barbez");
+
+        userService.createUser(newUser);
+
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
