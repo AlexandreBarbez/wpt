@@ -336,17 +336,17 @@ paths:
       responses:
         default:
           description: successful operation
-  /user/{username}:
+  /user/{userId}:
     get:
       tags:
         - user
-      summary: Get user by user name
+      summary: Get user by user id
       description: ''
-      operationId: getUserByName
+      operationId: getUserById
       parameters:
-        - name: username
+        - name: userId
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'The id that needs to be fetched.'
           required: true
           schema:
             type: string
@@ -371,9 +371,9 @@ paths:
       description: This can only be done by the logged in user.
       operationId: updateUser
       parameters:
-        - name: username
+        - name: userId
           in: path
-          description: name that need to be deleted
+          description: user id that need to be updated
           required: true
           schema:
             type: string
@@ -399,15 +399,15 @@ paths:
       description: This can only be done by the logged in user.
       operationId: deleteUser
       parameters:
-        - name: username
+        - name: userId
           in: path
-          description: The name that needs to be deleted
+          description: The user id that needs to be deleted
           required: true
           schema:
             type: string
       responses:
         '400':
-          description: Invalid username supplied
+          description: Invalid userId supplied
         '404':
           description: User not found
 components:

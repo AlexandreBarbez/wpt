@@ -1,11 +1,9 @@
 package com.abrbz.wpt.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "wpt-user")
 public class UserEntity {
 
     @Id
@@ -39,6 +37,35 @@ public class UserEntity {
         this.userStatus = userStatus;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Integer getUserStatus() {
+        return userStatus;
+    }
 }

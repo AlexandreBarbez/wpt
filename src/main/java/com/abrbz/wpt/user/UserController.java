@@ -27,34 +27,31 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<User> createUser(User user) {
-        User newUser = new User();
-        newUser.setFirstName("Alex");
-        newUser.setEmail("Alex@gmail.com");
-        newUser.setLastName("Barbez");
-
-        userService.createUser(newUser);
-
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        userService.createUser(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<User> createUsersWithListInput(List<@Valid User> user) {
-        return UserApi.super.createUsersWithListInput(user);
+    public ResponseEntity<User> createUsersWithListInput(List<@Valid User> users) {
+        userService.createUsers(users);
+        return new ResponseEntity<>(users.getLast(), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(String username) {
-        return UserApi.super.deleteUser(username);
+    public ResponseEntity<Void> deleteUser(String id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<User> getUserByName(String username) {
-        return UserApi.super.getUserByName(username);
+    public ResponseEntity<User> getUserById(String id) {
+        User user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<String> loginUser(String username, String password) {
-        return UserApi.super.loginUser(username, password);
+    public ResponseEntity<String> loginUser(String id, String password) {
+        return UserApi.super.loginUser(id, password);
     }
 
     @Override
@@ -63,7 +60,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(String username, User user) {
-        return UserApi.super.updateUser(username, user);
+    public ResponseEntity<Void> updateUser(String id, User user) {
+        return UserApi.super.updateUser(id, user);
     }
 }
