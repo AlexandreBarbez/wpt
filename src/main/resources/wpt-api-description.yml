@@ -376,7 +376,8 @@ paths:
           description: user id that need to be updated
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       requestBody:
         description: Update an existent user in the store
         content:

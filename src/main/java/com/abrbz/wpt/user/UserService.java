@@ -9,12 +9,14 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private final UserMapper userMapper;
     UserMapper mapper;
     UserRepository repository;
 
-    public UserService(UserMapper mapper, UserRepository userRepository) {
+    public UserService(UserMapper mapper, UserRepository userRepository, UserMapper userMapper) {
         this.mapper = mapper;
         this.repository = userRepository;
+        this.userMapper = userMapper;
     }
 
     void createUser(User user) {
@@ -34,5 +36,11 @@ public class UserService {
         return repository.findById(id).map(userEntity -> {
             return mapper.toModel(userEntity);
         }).orElseThrow();
+    }
+
+    public void updateUser(Long id, User user) {
+        UserEntity userEntity = userMapper.toEntity(user);
+        userEntity.setId(id);
+        repository.save(userEntity);
     }
 }

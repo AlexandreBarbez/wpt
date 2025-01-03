@@ -60,7 +60,8 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(String id, User user) {
-        return UserApi.super.updateUser(id, user);
+    public ResponseEntity<Void> updateUser(Long id, User user) {
+        userService.updateUser(id,user);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
