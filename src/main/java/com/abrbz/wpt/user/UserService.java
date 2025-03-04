@@ -1,7 +1,6 @@
 package com.abrbz.wpt.user;
 
-import com.abrbz.wptapi.model.User;
-import jakarta.validation.Valid;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,21 +9,22 @@ import java.util.List;
 public class UserService {
 
     private final UserMapper userMapper;
-    UserMapper mapper;
     UserRepository repository;
+    PasswordEncoder passwordEncoder;
 
-    public UserService(UserMapper mapper, UserRepository userRepository, UserMapper userMapper) {
-        this.mapper = mapper;
+    public UserService(UserMapper mapper, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.repository = userRepository;
-        this.userMapper = userMapper;
+        this.userMapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    void createUser(User user) {
-        UserEntity userEntity = UserMapper.toEntity(user);
+    void createUser(com.abrbz.wptapi.model.User user) {
+        UserEntity userEntity = userMapper.toEntity(user);
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(userEntity);
     }
 
-    public void createUsers(List<User> users) {
+    public void createUsers(List<com.abrbz.wptapi.model.User> users) {
         users.forEach(this::createUser);
     }
 
@@ -32,13 +32,11 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User getUserById(String id) {
-        return repository.findById(id).map(userEntity -> {
-            return mapper.toModel(userEntity);
-        }).orElseThrow();
+    public com.abrbz.wptapi.model.User getUserById(String id) {
+        return repository.findById(id).map(userMapper::toModel).orElseThrow();
     }
 
-    public void updateUser(Long id, User user) {
+    public void updateUser(Long id, com.abrbz.wptapi.model.User user) {
         UserEntity userEntity = userMapper.toEntity(user);
         userEntity.setId(id);
         repository.save(userEntity);

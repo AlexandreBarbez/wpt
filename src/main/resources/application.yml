@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: wpt
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/wpt
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e008f
+    expiration-time: 3600000
